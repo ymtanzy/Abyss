@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dgram": "^1.0.1",
+    "easymidi": "^2.1.0",
+    "node-osc": "^6.1.13"
+  }
+}
