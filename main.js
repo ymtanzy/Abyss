@@ -1,7 +1,7 @@
 'use strict';
 
 /*
-____ _ _____ ESP2Midi
+____ _ _____ Abyss
 **/
 
 
@@ -9,11 +9,12 @@ const easymidi = require('easymidi');
 const colors = require('colors/safe');
 const osc = require('node-osc');
 
-const output = new easymidi.Output('ESP2Midi', true);
+const output = new easymidi.Output('Abyss', true);
 
 var oscServer = new osc.Server(5555, '192.168.12.101', () => {
-  console.log(colors.blue('ESP2Midi ready'));
-  console.log(colors.green('OSC Server is listening'));
+  console.log(colors.green('*************'));
+  console.log(colors.blue('*** Abyss ***'));
+  console.log(colors.green('*************'));
 });
 
 oscServer.on('message', function (msg) {
