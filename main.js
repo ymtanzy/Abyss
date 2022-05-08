@@ -11,15 +11,14 @@ const osc = require('node-osc');
 
 const output = new easymidi.Output('Abyss', true);
 
-var oscServer = new osc.Server(5555, '192.168.12.101', () => {
+var oscServer = new osc.Server(5555, '127.0.0.1', () => {
   console.log(colors.green('*************'));
   console.log(colors.blue('*** Abyss ***'));
   console.log(colors.green('*************'));
 });
 
 oscServer.on('message', function (msg) {
-  //console.log(`Message: ${msg}`);
-  //oscServer.close();
+  console.log(`Message: ${msg}`);
 
   output.send('cc', {
     controller: msg[0],
@@ -46,6 +45,7 @@ oscServer.on('message', function (msg) {
 
 }, 10);
  */
+
 /* setInterval(()=>{
 
   for (let i = 0; i < 16; i++) {
