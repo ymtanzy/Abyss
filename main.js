@@ -9,6 +9,28 @@ const easymidi = require('easymidi');
 const colors = require('colors/safe');
 const osc = require('node-osc');
 
+//--------------
+// On broadcast un message chaque seconde pendant 10 secondes pour que les ESP puissent repérer l'IP du mac et envoyer l'OSC
+
+const dgram = require('dgram');
+const client = dgram.createSocket('udp4');
+
+client.bind(function() {
+  client.setBroadcast(true);
+  let timeout = 1000;
+  let interval = setInterval(broadcastNew, timeout);
+  setTimeout(() => clearInterval(interval), timeout * 10);
+});
+
+function broadcastNew() {
+  let message = Buffer.from('Un message des abysses');
+  client.send(message, 0, message.length, 6666, '255.255.255.255', function() {
+      console.log("-" + message);
+  });
+}
+
+//-----------------
+
 const output = new easymidi.Output('Abyss', true);
 
 var oscServer = new osc.Server(5555, '127.0.0.1', () => {
@@ -26,6 +48,7 @@ oscServer.on('message', function (msg) {
     channel: 0
   })
 });
+
 
 /* setInterval(()=>{
 
@@ -46,14 +69,14 @@ oscServer.on('message', function (msg) {
 }, 10);
  */
 
-/* setInterval(()=>{
+// setInterval(()=>{
 
-  for (let i = 0; i < 16; i++) {
-    output.send('cc', {
-      controller: i,
-      value: Math.random()*127,
-      channel: 0
-    })
-  }
+//   for (let i = 0; i < 16; i++) {
+//     output.send('cc', {
+//       controller: i,
+//       value: Math.random()*127,
+//       channel: 0
+//     })
+//   }
 
-}, 2000); */
+// }, 2000);
